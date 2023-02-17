@@ -83,6 +83,20 @@ function App() {
     }));
 
     setModifiedData([...dataList]);
+    setData([...fixData]);
+    if (filterText !== "") {
+      const filteredData = fixData.filter((item) => {
+        return (
+          item?.id.toString()?.includes(filterText) ||
+          item?.title?.toLowerCase().includes(filterText.toLowerCase()) ||
+          item?.userId.toString()?.includes(filterText) ||
+          item?.body?.toLowerCase().includes(filterText.toLowerCase())
+        );
+      });
+      console.log(fixData);
+      console.log(filteredData);
+      setData([...filteredData]);
+    }
   }, [filterText]);
 
   const filterData =
@@ -94,19 +108,6 @@ function App() {
 
   const handleSearchFilter = (e: React.FormEvent<HTMLInputElement> | any) => {
     setFilterText(e.target.value);
-
-    if (filterText !== "") {
-      const filteredData = fixData.filter((data) => {
-        return (
-          data?.id.toString()?.includes(filterText) ||
-          data?.title?.toLowerCase().includes(filterText.toLowerCase()) ||
-          data?.userId.toString()?.includes(filterText) ||
-          data?.body?.toLowerCase().includes(filterText.toLowerCase())
-        );
-      });
-      console.log(filteredData);
-      setData([...filteredData]);
-    }
   };
 
   const columns: ColumnsType<DataType> = [
